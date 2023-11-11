@@ -39,12 +39,7 @@ jobs:
     - name: make hiop
       run: |
         ./scripts/feeds update -a
-        ./scripts/feeds install -a > /dev/null 2>&1
-        cp demo-64bit.config .config
-        make defconfig
-        make -j$(nproc)
-        cp bin/targets/armvirt/64/openwrt-armvirt-64-root.ext4.gz bin/openwrt-armvirt-64-root.ext4.gz
-        make clean
+        ./scripts/feeds install -a
         cp demo-32bit.config .config
         make defconfig
         make -j$(nproc)
@@ -59,7 +54,6 @@ jobs:
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
         echo "🔗 hi-op-32bit for histb" >> release.txt
-        echo "🔗 hi-op-64bit for histb" >> release.txt
         echo "::set-output name=status::success"
 
     - name: Upload firmware to release
